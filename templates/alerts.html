@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alerts</title>
+</head>
+<body>
+    <h1>⚠ Alerts</h1>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>ID</th>
+            <th>Person ID</th>
+            <th>Timestamp</th>
+            <th>Status</th>
+            <th>Snapshot</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row['id'] }}</td>
+            <td>{{ row['person_id'] if row['person_id'] else 'Unknown' }}</td>
+            <td>{{ row['timestamp'] }}</td>
+            <td style="color: red; font-weight: bold;">{{ row['status'] }}</td>
+            <td>
+                {% if row['snapshot'] %}
+                <img src="{{ url_for('static', filename=row['snapshot'].split('static/')[-1]) }}" width="100">
+                {% else %}
+                No Image
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
