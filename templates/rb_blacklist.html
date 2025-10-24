@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head><title>Blacklist</title></head>
+<body>
+  <h2>Blacklist</h2>
+  <form method="post" action="/admin/blacklist/add">
+    <input name="name" placeholder="Name" required>
+    <input name="notes" placeholder="Notes">
+    <button type="submit">Add</button>
+  </form>
+  <ul>
+  {% for b in items %}
+    <li>{{ b.name }} - {{ b.notes }} - active: {{ b.active }}
+      <form method="post" action="/admin/blacklist/toggle/{{ b.id }}" style="display:inline">
+        <button type="submit">Toggle</button>
+      </form>
+    </li>
+  {% endfor %}
+  </ul>
+  <p><a href="/dashboard">Back</a></p>
+</body>
+</html>

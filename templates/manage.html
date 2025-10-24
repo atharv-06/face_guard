@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head><title>Manage Dataset</title></head>
+<body>
+<h2>Dataset Management</h2>
+<h3>Persons</h3>
+<ul>
+{% for p in persons %}
+  <li>{{ p }}</li>
+{% else %}
+  <li><em>No persons found. Use capture_faces.py to add a person.</em></li>
+{% endfor %}
+</ul>
+<p>
+  After adding persons with <code>capture_faces.py</code>, run <code>python train_model.py</code> and click
+  <a href="/refresh_labels">Refresh labels</a> to update the running app.
+</p>
+<p><a href="/">Back to live</a></p>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head><title>Recognition Logs</title></head>
+<body>
+<h2>Recent Recognitions</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+<tr><th>ID</th><th>Name</th><th>Confidence</th><th>UTC Timestamp</th></tr>
+{% for r in logs %}
+<tr>
+  <td>{{ r[0] }}</td>
+  <td>{{ r[1] }}</td>
+  <td>{{ "%.1f"|format(r[2]) }}</td>
+  <td>{{ r[3] }}</td>
+</tr>
+{% endfor %}
+</table>
+<p><a href="/">Back to live</a></p>
+</body>
+</html>

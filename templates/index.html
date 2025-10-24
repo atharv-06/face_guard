@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Face Recognition Live Feed</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background:#f0f0f0; text-align:center; }
+        #video { border:2px solid #333; }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 1000;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Real-Time Face Recognition</h1>
+    <img id="video" src="{{ url_for('video_feed') }}" width="640" height="480">
+
+    <script>
+        const socket = io();
+
+        socket.on("face_detected", (data) => {
+            const msg = `${data.name} detected (confidence: ${data.confidence.toFixed(1)})`;
+            const toast = document.createElement("div");
+            toast.className = "toast";
+            toast.innerText = msg;
+            toast.style.background = data.name === "Unknown" ? "red" : "green";
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        });
+    </script>
+</body>
+</html>

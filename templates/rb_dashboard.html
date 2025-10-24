@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h2>Dashboard</h2>
+  <p>Logged in as: {{ current_user._user.username }}</p>
+  <p>Total recognitions: {{ total }}</p>
+  <p>Blacklisted active: {{ bl_count }}</p>
+  <h3>Recent</h3>
+  <ul>
+    {% for r in recent %}
+      <li>{{ r.timestamp }} - {{ r.name }} ({{ "%.1f"|format(r.confidence) }})</li>
+    {% endfor %}
+  </ul>
+  <p><a href="/logs">Full logs</a> | <a href="/admin/users">Manage Users</a> | <a href="/admin/blacklist">Blacklist</a> | <a href="/analytics">Analytics</a> | <a href="/logout">Logout</a></p>
+</body>
+</html>

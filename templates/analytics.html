@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <title>Analytics</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h2>Analytics (last 14 days)</h2>
+  <canvas id="timeline" width="800" height="300"></canvas>
+  <canvas id="topnames" width="800" height="300"></canvas>
+
+  <script>
+    async function fetchData(){
+      const resp = await fetch('/analytics_data');
+      const data = await resp.json();
+      const ctx = document.getElementById('timeline').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: { labels: data.timeline.labels, datasets: [{ label: 'Recognitions', data: data.timeline.values }] }
+      });
+      const ctx2 = document.getElementById('topnames').getContext('2d');
+      new Chart(ctx2, {
+        type: 'pie',
+        data: { labels: data.top_names.map(x=>x.name), datasets: [{ data: data.top_names.map(x=>x.count) }] }
+      });
+    }
+    fetchData();
+  </script>
+  <p><a href="/dashboard">Back</a></p>
+</body>
+</html>

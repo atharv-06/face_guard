@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head><title>Users</title></head>
+<body>
+  <h2>Users</h2>
+  <form method="post" action="/admin/users/create">
+    <input name="username" placeholder="username" required>
+    <input name="password" type="password" placeholder="password" required>
+    <select name="role"><option value="user">User</option><option value="admin">Admin</option></select>
+    <button type="submit">Create</button>
+  </form>
+  <ul>
+    {% for u in users %}
+      <li>{{ u.username }} - {{ u.role }} - created: {{ u.created_at }} 
+        <form method="post" action="/admin/users/delete/{{ u.id }}" style="display:inline">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+  <p><a href="/dashboard">Back</a></p>
+</body>
+</html>
