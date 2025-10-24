@@ -1,17 +1,15 @@
-# train_model.py
 import cv2
 import os
+import json
 import numpy as np
-
-DATASET_DIR = "dataset"
-MODEL_DIR = "trained_model"
-MODEL_PATH = os.path.join(MODEL_DIR, "lbph.yml")
+from app import DATASET_DIR, MODEL_PATH, LABEL_MAP_PATH
 
 def train():
     faces = []
     ids = []
     label_map = {}
     cur_id = 0
+
     for person in sorted(os.listdir(DATASET_DIR)):
         person_dir = os.path.join(DATASET_DIR, person)
         if not os.path.isdir(person_dir):
@@ -32,11 +30,15 @@ def train():
 
     recognizer = cv2.face.LBPHFaceRecognizer_create()
     recognizer.train(faces, np.array(ids))
-
-    os.makedirs(MODEL_DIR, exist_ok=True)
+    os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
     recognizer.save(MODEL_PATH)
+
+    # Save label map as JSON
+    with open(LABEL_MAP_PATH, "w") as f:
+        json.dump({str(k): v for k, v in label_map.items()}, f)
+
     print("Model saved to", MODEL_PATH)
-    # print label map for reference
+    print("Label map saved to", LABEL_MAP_PATH)
     for k, v in label_map.items():
         print(k, "->", v)
 

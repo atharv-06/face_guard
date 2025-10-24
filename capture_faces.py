@@ -1,4 +1,3 @@
-# capture_faces.py
 import cv2
 import os
 
@@ -31,9 +30,7 @@ def capture_for_person(name):
             cv2.putText(frame, f"Captured: {count}/{num_samples}", (10, 30),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
         cv2.imshow("Capture Faces - Press q to quit", frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-        if count >= num_samples:
+        if cv2.waitKey(1) & 0xFF == ord('q') or count >= num_samples:
             break
     cap.release()
     cv2.destroyAllWindows()
